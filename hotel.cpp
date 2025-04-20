@@ -9,7 +9,7 @@
 using namespace std;
 
 int generateUniqueId() {
-    ifstream inFile("personIDs.txt");
+    ifstream inFile("personIds.txt");
     vector<string> personIDs;
     string line;
 
@@ -37,7 +37,7 @@ int generateUniqueId() {
         if (!found) break;
     }
 
-    ofstream outFile("personIDs.txt", ios::app);
+    ofstream outFile("personIds.txt", ios::app);
     outFile << numStr << "\n";
     outFile.close();
 
