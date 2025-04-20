@@ -1,0 +1,4 @@
+Room Number,Room Type,Price,Availability
+456,1,500,false
+1,1,250.5,false
+678,2,132.25,true
