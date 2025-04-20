@@ -51,7 +51,7 @@ public:
     int personId;
     string firstName;
     string lastName;
-    int stayingRoom = NULL;
+    int stayingRoom = 0;
     Guest(int personId, string fName, string lName) {
         this->personId = personId;
         this->firstName = fName;
@@ -170,8 +170,13 @@ public:
         for (Guest& g : guests) {
             if (guestId == g.personId) {
                 guestFound = true;
-                cout << g.personId << "\t\t" << g.firstName << "\t\t" << g.lastName << "\t" << g.stayingRoom << endl;
-
+                cout << g.personId << "\t\t" << g.firstName << "\t\t" << g.lastName << "\t\t";
+                if (g.stayingRoom == 0) {
+                    cout << "no room booked";
+                } else {
+                    cout << g.stayingRoom;
+                }
+                cout << endl;
                 cout << endl;
                 cout << "Room Number" << "\t" << "Room Type" << "\t" << "Price" << "\t\t" << "Availabilty"<< endl;
                 cout << "---------------------------------------------------------------"<< endl;
@@ -186,12 +191,23 @@ public:
                 cout << "Guest's choice (input room number): ";
                 int choice;
                 cin >> choice;
-                g.stayingRoom = choice;
-
+                bool validChoice = false;
                 for (Room& r : rooms) {
-                    if (choice == r.roomNumber) {
+                    if (choice == r.roomNumber && r.isAvailable) {
                         r.isAvailable = false;
+                        g.stayingRoom = choice;
+                        validChoice = true;
+                        break;
                     }
+                }
+
+                if (!validChoice) {
+                    cout << endl;
+                    cout << "***********************" << endl;
+                    cout << "Invalid or unavailable room selected" << endl;
+                    cout << "***********************" << endl;
+                    cout << endl;
+                    return;
                 }
             }
         }
@@ -206,7 +222,7 @@ public:
         }
 
         ofstream outFile("guests.csv");
-        outFile << "ID, FirstName, Lastname, RoomNumber" << endl; // CSV header
+        outFile << "ID,FirstName,Lastname,RoomNumber" << endl; // CSV header
         for (Guest& g : guests) {
             outFile << g.personId << ","
                  << g.firstName << ","
@@ -232,17 +248,22 @@ public:
     }
 
     void viewGuests() {
-        vector <Guest> guests = loadGuests();
+        vector<Guest> guests = loadGuests();
 
         cout << endl;
         cout << "Personal ID" << "\t" << "FirstName" << "\t" << "LastName" << "\t" << "Booked Room" << endl;
-        cout << "---------------------------------------------------------------"<< endl;
+        cout << "---------------------------------------------------------------" << endl;
         for (const Guest& g : guests) {
-            cout << g.personId << "\t\t" << g.firstName << "\t\t" << g.lastName << "\t" << g.stayingRoom << endl;
+            cout << g.personId << "\t\t" << g.firstName << "\t\t" << g.lastName << "\t\t";
+            if (g.stayingRoom == 0) {
+                cout << "no room booked";
+            } else {
+                cout << g.stayingRoom;
+            }
+            cout << endl;
         }
         cout << endl;
-
-    };
+    }
 
     //Room code
     void addRoom() {
@@ -483,4 +504,4 @@ __        __   _
     }while (choice != 8);
 }
 
-// room booking issue
+// room booking when available rooms 404
