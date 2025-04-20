@@ -37,7 +37,7 @@ int generateUniqueId() {
         if (!found) break;
     }
 
-    ofstream outFile("personIds.txt", ios::app);
+    ofstream outFile("personIDs.txt", ios::app);
     outFile << numStr << "\n";
     outFile.close();
 
@@ -160,7 +160,7 @@ public:
         cout << "Input guest's personal ID: ";
         int guestId;
         cin >> guestId;
-        bool guestFound = true;
+        bool guestFound = false;
         vector <Guest> guests = loadGuests();
         vector<Room> rooms = loadRooms();
 
@@ -196,7 +196,14 @@ public:
             }
         }
 
-        if (!guestFound) return;
+        if (!guestFound) {
+            cout << endl;
+            cout << "***********************" << endl;
+            cout << "Guest not found" << endl;
+            cout << "***********************" << endl;
+            cout << endl;
+            return;
+        }
 
         ofstream outFile("guests.csv");
         outFile << "ID, FirstName, Lastname, RoomNumber" << endl; // CSV header
