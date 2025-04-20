@@ -163,6 +163,7 @@ public:
         bool guestFound = false;
         vector <Guest> guests = loadGuests();
         vector<Room> rooms = loadRooms();
+        vector <Room> availableRooms;
 
         cout << endl;
         cout << "Personal ID" << "\t" << "FirstName" << "\t" << "LastName" << "\t" << "Booked Room" << endl;
